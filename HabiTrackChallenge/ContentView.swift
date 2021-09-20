@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    var habits = ["Coding", "Running", "Lifting"]
+    @State private var newHabit = ""
+    @State private var habits = ["Coding", "Running", "Lifting"]
     
     var body: some View {
         NavigationView {
             VStack {
+                TextField("Enter a new habit", text: $newHabit)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding([.top, .horizontal])
+                
                 List(habits, id: \.self) {
                     Text($0)
                 }
