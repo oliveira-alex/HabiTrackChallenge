@@ -11,10 +11,12 @@ struct ContentView: View {
     @State private var newHabit = ""
     @State private var habits = ["Coding", "Running", "Lifting"]
     
+    @State private var showingError = false
+    
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Enter a new habit", text: $newHabit)
+                TextField("Enter a new habit", text: $newHabit, onCommit: addNewHabit)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding([.top, .horizontal])
                 
@@ -23,6 +25,21 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle("Habits")
+            .alert(isPresented: $showingError) {
+                Alert(title: Text("Already added"),
+                      message: Text("Your list already has a habit with this same name"),
+                      dismissButton: .default(Text("OK")))
+            }
+        }
+    }
+    
+    func addNewHabit() {
+        if !habits.contains(newHabit) {
+            habits.append(newHabit)
+            
+            newHabit = ""
+        } else {
+            showingError = true
         }
     }
 }
