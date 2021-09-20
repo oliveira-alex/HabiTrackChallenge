@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    var habits = ["Coding", "Running", "Lifting"]
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                List(habits, id: \.self) {
+                    Text($0)
+                }
+            }
+            .navigationBarTitle("Habits")
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.colorScheme, .dark)
     }
 }
