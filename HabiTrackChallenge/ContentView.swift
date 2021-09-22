@@ -31,9 +31,17 @@ struct ContentView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding([.top, .horizontal])
                 
-                List(habits) {
-                    Text($0.name + "\n" + "Count: " + String($0.timesPracticed))
-                    Stepper("", onIncrement: nil, onDecrement: nil)
+                List(habits) { habit in
+                    Stepper(habit.name + "\n" + "Count: " + String(habit.timesPracticed),
+                            onIncrement: {
+                                let habitIndex = habits.firstIndex(where: { $0.id == habit.id })!
+                                habits[habitIndex].timesPracticed += 1
+                            },
+                            onDecrement: {
+                                let habitIndex = habits.firstIndex(where: { $0.id == habit.id })!
+                                habits[habitIndex].timesPracticed -= 1
+                            }
+                    )
                 }
             }
             .navigationBarTitle("Habits")
@@ -56,11 +64,9 @@ struct ContentView: View {
 
         let newHabit = Habit(name: newHabitName, timesPracticed: 1)
         habits.append(newHabit)
+        
+        self.newHabitName = ""
     }
-    
-//    func incrementCountOf(_ habit: Habit) {
-//        <#function body#>
-//    }
 }
 
 struct ContentView_Previews: PreviewProvider {
