@@ -8,20 +8,46 @@
 import SwiftUI
 
 struct Habit: Identifiable {
-    let name: String
-    var timesPracticed: Int
+    var name: String = "New Habit"
+    var timesPracticed: Int = 1
     let id = UUID()
+}
+
+class Habits: ObservableObject {
+    @Published var items: [Habit]
+    
+    init() {
+        self.items = [
+            Habit(name: "Coding", timesPracticed: 365),
+            Habit(name: "Running", timesPracticed: 99),
+            Habit(name: "Lifting", timesPracticed: 150)
+        ]
+    }
+    
+    func add(_ newHabit: Habit) {
+        self.items.append(newHabit)
+    }
+    
+    func delete(_ habit: Habit) {
+        let habitIndex = self.items.firstIndex(where: { $0.id == habit.id })!
+        self.items.remove(at: habitIndex)
+    }
+    
+    func incrementTimesPracticedOf(_ habit: Habit) {
+        let habitIndex = self.items.firstIndex(where: { $0.id == habit.id })!
+        self.items[habitIndex].timesPracticed += 1
+    }
+    
+    func decrementTimesPracticedOf(_ habit: Habit) {
+        let habitIndex = self.items.firstIndex(where: { $0.id == habit.id })!
+        self.items[habitIndex].timesPracticed -= 1
+    }
 }
 
 struct ContentView: View {
     @State private var newHabitName = ""
-    @State private var habits: [Habit] = [
-        Habit(name: "Coding", timesPracticed: 365),
-        Habit(name: "Running", timesPracticed: 99),
-        Habit(name: "Lifting", timesPracticed: 150)]
-    
-    @State private var value = 0
-    
+    @ObservedObject var habits = Habits()
+
     @State private var showingError = false
     
     var body: some View {
@@ -31,16 +57,10 @@ struct ContentView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding([.top, .horizontal])
                 
-                List(habits) { habit in
+                List(habits.items) { habit in
                     Stepper(habit.name + "\n" + "Count: " + String(habit.timesPracticed),
-                            onIncrement: {
-                                let habitIndex = habits.firstIndex(where: { $0.id == habit.id })!
-                                habits[habitIndex].timesPracticed += 1
-                            },
-                            onDecrement: {
-                                let habitIndex = habits.firstIndex(where: { $0.id == habit.id })!
-                                habits[habitIndex].timesPracticed -= 1
-                            }
+                            onIncrement: { habits.incrementTimesPracticedOf(habit) },
+                            onDecrement: { habits.decrementTimesPracticedOf(habit) }
                     )
                 }
             }
@@ -62,10 +82,10 @@ struct ContentView: View {
 //            showingError = true
 //    }
 
-        let newHabit = Habit(name: newHabitName, timesPracticed: 1)
-        habits.append(newHabit)
-        
-        self.newHabitName = ""
+        let newHabit = newHabitName != "" ? Habit(name: newHabitName, timesPracticed: 1) : Habit()
+        habits.add(newHabit)
+
+        newHabitName = ""
     }
 }
 
