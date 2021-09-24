@@ -11,6 +11,7 @@
 		E78FFCC926F8ED9600AA1AEE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78FFCC826F8ED9600AA1AEE /* ContentView.swift */; };
 		E78FFCCB26F8ED9700AA1AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E78FFCCA26F8ED9700AA1AEE /* Assets.xcassets */; };
 		E78FFCCE26F8ED9700AA1AEE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E78FFCCD26F8ED9700AA1AEE /* Preview Assets.xcassets */; };
+		E7E9B5CC26FE6AE800E072F4 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E9B5CB26FE6AE800E072F4 /* AddHabitView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		E78FFCCA26F8ED9700AA1AEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E78FFCCD26F8ED9700AA1AEE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E78FFCCF26F8ED9700AA1AEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7E9B5CB26FE6AE800E072F4 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				E78FFCC626F8ED9600AA1AEE /* HabiTrackChallengeApp.swift */,
 				E78FFCC826F8ED9600AA1AEE /* ContentView.swift */,
+				E7E9B5CB26FE6AE800E072F4 /* AddHabitView.swift */,
 				E78FFCCA26F8ED9700AA1AEE /* Assets.xcassets */,
 				E78FFCCF26F8ED9700AA1AEE /* Info.plist */,
 				E78FFCCC26F8ED9700AA1AEE /* Preview Content */,
@@ -140,6 +143,7 @@
 			files = (
 				E78FFCC926F8ED9600AA1AEE /* ContentView.swift in Sources */,
 				E78FFCC726F8ED9600AA1AEE /* HabiTrackChallengeApp.swift in Sources */,
+				E7E9B5CC26FE6AE800E072F4 /* AddHabitView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

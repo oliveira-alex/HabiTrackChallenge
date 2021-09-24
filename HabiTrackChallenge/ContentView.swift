@@ -49,27 +49,54 @@ struct ContentView: View {
     @ObservedObject var habits = Habits()
 
     @State private var showingError = false
+    @State private var showingAddHabitSheet = false
     
     var body: some View {
         NavigationView {
-            VStack {
-                TextField("Enter a new habit", text: $newHabitName, onCommit: addNewHabit)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding([.top, .horizontal])
-                
-                List(habits.items) { habit in
-                    Stepper(habit.name + "\n" + "Count: " + String(habit.timesPracticed),
-                            onIncrement: { habits.incrementTimesPracticedOf(habit) },
-                            onDecrement: { habits.decrementTimesPracticedOf(habit) }
-                    )
+//            VStack {
+//                TextField("Enter a new habit", text: $newHabitName, onCommit: addNewHabit)
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+//                    .padding([.top, .horizontal])
+//
+                List {
+                    ForEach(habits.items) { habit in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(habit.name)
+                                    .font(.headline)
+                                HStack {
+                                    Text("Count: ")
+                                        .font(.subheadline)
+                                    Text(String(habit.timesPracticed))
+                                }
+                            }
+                            
+                            Stepper("",
+                                    onIncrement: { habits.incrementTimesPracticedOf(habit) },
+                                    onDecrement: { habits.decrementTimesPracticedOf(habit) }
+                            )
+                        }
+                    }
                 }
-            }
+//            }
             .navigationBarTitle("Habits")
-            .alert(isPresented: $showingError) {
-                Alert(title: Text("Already added"),
-                      message: Text("Your list already has a habit with this same name"),
-                      dismissButton: .default(Text("OK")))
-            }
+                .navigationBarItems(
+                    leading: EditButton(),
+                    trailing: Button(action: {
+                        self.showingAddHabitSheet.toggle()
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                )
+                .sheet(isPresented: $showingAddHabitSheet) {
+//                    print("showing add sheet")
+                    AddHabitView(habits: self.habits)
+                }
+//            .alert(isPresented: $showingError) {
+//                Alert(title: Text("Already added"),
+//                      message: Text("Your list already has a habit with this same name"),
+//                      dismissButton: .default(Text("OK")))
+//            }
         }
     }
     
@@ -79,7 +106,7 @@ struct ContentView: View {
 //
 //            newHabit = ""
 //        } else {
-//            showingError = true
+//            showingError.toggle()
 //    }
 
         let newHabit = newHabitName != "" ? Habit(name: newHabitName, timesPracticed: 1) : Habit()
@@ -92,6 +119,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environment(\.colorScheme, .dark)
+//            .environment(\.colorScheme, .dark)
     }
 }
