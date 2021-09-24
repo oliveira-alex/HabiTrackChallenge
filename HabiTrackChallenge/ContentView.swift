@@ -69,6 +69,14 @@ struct ContentView: View {
 
     @State private var showingAddHabitSheet = false
     
+    func removeItems(at offsets: IndexSet) {
+        habits.items.remove(atOffsets: offsets)
+    }
+    
+    func moveItem(from oldOffset: IndexSet, to newOffset: Int) {
+        habits.items.move(fromOffsets: oldOffset, toOffset: newOffset)
+    }
+    
     var body: some View {
         NavigationView {
             List {
@@ -90,6 +98,10 @@ struct ContentView: View {
                         )
                     }
                 }
+                .onDelete(perform: removeItems)
+                .onMove(perform: { indices, newOffset in
+                    moveItem(from: indices, to: newOffset)
+                })
             }
             .navigationBarTitle("Habits")
             .navigationBarItems(
