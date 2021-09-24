@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Habit: Identifiable {
+struct Habit: Identifiable, Codable {
     var name: String
     var description: String
     var timesPracticed: Int
@@ -15,14 +15,33 @@ struct Habit: Identifiable {
 }
 
 class Habits: ObservableObject {
-    @Published var items: [Habit]
+    @Published var items = [Habit]() {
+        didSet {
+            let encoder = JSONEncoder()
+            
+            if let encoded = try? encoder.encode(items) {
+                UserDefaults.standard.set(encoded, forKey: "Items")
+            }
+        }
+    }
     
     init() {
-        self.items = [
-            Habit(name: "Coding", description: "Hacking with Swift", timesPracticed: 365),
-            Habit(name: "Running", description: "Flying low", timesPracticed: 9),
-            Habit(name: "Lifting", description: "Sweating my heart out", timesPracticed: 80)
-        ]
+//        self.items = [
+//            Habit(name: "Coding", description: "Hacking with Swift", timesPracticed: 365),
+//            Habit(name: "Running", description: "Flying low", timesPracticed: 9),
+//            Habit(name: "Lifting", description: "Sweating my heart out", timesPracticed: 80)
+//        ]
+        
+        if let items = UserDefaults.standard.data(forKey: "Items") {
+            let decoder = JSONDecoder()
+            
+            if let decodedItems = try? decoder.decode([Habit].self, from: items) {
+                self.items = decodedItems
+                return
+            }
+        }
+        
+        self.items = []
     }
     
     func add(_ newHabit: Habit) {
