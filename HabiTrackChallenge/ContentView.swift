@@ -19,8 +19,8 @@ class Habits: ObservableObject {
     init() {
         self.items = [
             Habit(name: "Coding", timesPracticed: 365),
-            Habit(name: "Running", timesPracticed: 99),
-            Habit(name: "Lifting", timesPracticed: 150)
+            Habit(name: "Running", timesPracticed: 9),
+            Habit(name: "Lifting", timesPracticed: 80)
         ]
     }
     
@@ -65,15 +65,15 @@ struct ContentView: View {
                                 Text(habit.name)
                                     .font(.headline)
                                 HStack {
-                                    Text("Count: ")
-                                        .font(.subheadline)
                                     Text(String(habit.timesPracticed))
+                                    Text(habit.timesPracticed >= 2 ? "Times" : "Time")
+                                        .font(.subheadline)
                                 }
                             }
                             
                             Stepper("",
                                     onIncrement: { habits.incrementTimesPracticedOf(habit) },
-                                    onDecrement: { habits.decrementTimesPracticedOf(habit) }
+                                    onDecrement: { habit.timesPracticed > 0 ? habits.decrementTimesPracticedOf(habit) : nil }
                             )
                         }
                     }
