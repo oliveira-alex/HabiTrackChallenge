@@ -16,20 +16,20 @@ struct AddHabitView: View {
     
     @State private var showingError = false
     
-    func addNewHabit() {
-//        if !habits.contains(newHabit) {
-//            habits.append(newHabit)
+//    func addNewHabit() {
+////        if !habits.contains(newHabit) {
+////            habits.append(newHabit)
+////
+////            newHabit = ""
+////        } else {
+////            showingError.toggle()
+////    }
 //
-//            newHabit = ""
-//        } else {
-//            showingError.toggle()
+//        let newHabit = Habit(name: newHabitName, description: newHabitDescription, timesPracticed: 1)
+//        habits.add(newHabit)
+//
+//        newHabitName = ""
 //    }
-
-        let newHabit = Habit(name: newHabitName, description: newHabitDescription, timesPracticed: 1)
-        habits.add(newHabit)
-
-        newHabitName = ""
-    }
 
     
     var body: some View {

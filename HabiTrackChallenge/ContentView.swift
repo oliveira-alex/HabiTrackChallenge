@@ -81,21 +81,23 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(habits.items) { habit in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(habit.name)
-                                .font(.headline)
-                            HStack {
-                                Text(String(habit.timesPracticed))
-                                Text(habit.timesPracticed >= 2 ? "Times" : "Time")
-                                    .font(.subheadline)
+                    NavigationLink(destination: HabitDetailsView(habits, habit)) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(habit.name)
+                                    .font(.headline)
+                                HStack {
+                                    Text(String(habit.timesPracticed))
+                                    Text(habit.timesPracticed >= 2 ? "Times" : "Time")
+                                        .font(.subheadline)
+                                }
                             }
+                            
+                            Stepper("",
+                                    onIncrement: { habits.incrementTimesPracticedOf(habit) },
+                                    onDecrement: { habit.timesPracticed > 0 ? habits.decrementTimesPracticedOf(habit) : nil }
+                            )
                         }
-                        
-                        Stepper("",
-                                onIncrement: { habits.incrementTimesPracticedOf(habit) },
-                                onDecrement: { habit.timesPracticed > 0 ? habits.decrementTimesPracticedOf(habit) : nil }
-                        )
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -113,7 +115,6 @@ struct ContentView: View {
                 }
             )
             .sheet(isPresented: $showingAddHabitSheet) {
-//                    print("showing add sheet")
                 AddHabitView(habits: self.habits)
             }
 //            .alert(isPresented: $showingError) {
@@ -128,6 +129,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-//            .environment(\.colorScheme, .dark)
+            .environment(\.colorScheme, .dark)
     }
 }
