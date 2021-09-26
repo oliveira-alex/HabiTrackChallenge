@@ -15,46 +15,53 @@ struct HabitDetailsView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Form {
-                    Section(header: Text("Description")) {
-                        Text(habit.description)
-                    }
-                    
-                    Section(header: Text("Times Practiced")) {
-                        Text(String(habit.timesPracticed))
-                    }
+        VStack {
+            Text(habit.name)
+                .font(.largeTitle)
+                .padding()
+            
+            Form {
+                Section(header: Text("Description")) {
+                    Text(habit.description)
                 }
                 
-                HStack {
-                    Button("−") { habit.timesPracticed > 0 ? habits.items[habitIndex].timesPracticed -= 1 : nil }
-                        .font(.title)
-                        .foregroundColor(habit.timesPracticed > 0 ? .red : .gray)
-                        .disabled(habit.timesPracticed <= 0)
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke()
-                        )
-                    
-                    Text("    ")
-                    
-                    Button("+") { habits.items[habitIndex].timesPracticed += 1 }
-                        .font(.title)
-                        .foregroundColor(.green)
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke()
-                        )
+                Section(header: Text("Times Practiced")) {
+                    Text(String(habit.timesPracticed))
                 }
+            }
+            
+            HStack {
+                Spacer()
+                
+                Button("−") { habit.timesPracticed > 0 ? habits.items[habitIndex].timesPracticed -= 1 : nil }
+                    .font(.title)
+                    .foregroundColor(habit.timesPracticed > 0 ? .red : .gray)
+                    .disabled(habit.timesPracticed <= 0)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke()
+                    )
+                
+                Text("    ")
+                
+                Button("+") { habits.items[habitIndex].timesPracticed += 1 }
+                    .font(.title)
+                    .foregroundColor(.green)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke()
+                    )
                 
                 Spacer()
-                    .layoutPriority(0)
             }
-            .navigationBarTitle(habit.name)
+            
+            Spacer()
+                .layoutPriority(0)
+            
         }
+        .layoutPriority(0)
     }
     
     init(_ habits: Habits, _ habit: Habit) {
