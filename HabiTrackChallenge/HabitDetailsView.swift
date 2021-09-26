@@ -28,9 +28,10 @@ struct HabitDetailsView: View {
                 }
                 
                 HStack {
-                    Button("−") { habits.items[habitIndex].timesPracticed -= 1 }
+                    Button("−") { habit.timesPracticed > 0 ? habits.items[habitIndex].timesPracticed -= 1 : nil }
                         .font(.title)
-                        .foregroundColor(.red)
+                        .foregroundColor(habit.timesPracticed > 0 ? .red : .gray)
+                        .disabled(habit.timesPracticed <= 0)
                         .padding()
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
