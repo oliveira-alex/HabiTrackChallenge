@@ -15,7 +15,7 @@ struct HabitDetailsView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(habit.name)
                 .font(.largeTitle)
                 .padding()
@@ -61,6 +61,7 @@ struct HabitDetailsView: View {
                 .layoutPriority(0)
             
         }
+        .navigationBarTitle("Details", displayMode: .inline)
         .layoutPriority(0)
     }
     
